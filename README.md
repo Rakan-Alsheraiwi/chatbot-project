@@ -18,34 +18,20 @@ This enhancement integrates seamlessly with our existing setup—Streamlit for t
 
 ### How to Get Started
 
-In this stage, we will create a **new** table called `advanced_chats` in the database using the following schema:
-
-```sql
-CREATE TABLE IF NOT EXISTS advanced_chats (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    file_path TEXT NOT NULL,
-    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    pdf_path TEXT,
-    pdf_name TEXT,
-    pdf_uuid TEXT
-);
-```
-
-Alternatively, you can **add the extra columns** to the `chats` table created in Stage 3 instead of creating a new table.
-
 #### **Step 1: Set Up Environment Variables**
-Store your `OPENAI_API_KEY` and **Database Credentials** in a `.env` file.
+Store your `OPENAI_API_KEY`, **Database Credentials** and **Storage SAS token** in a `.env` file.
 
 Your `.env` file should look like this:
 
 ```env
-OPENAI_API_KEY=YOUR-OPENAI-API-KEY
-DB_NAME=YOUR-DB-NAME
-DB_USER=YOUR-DB-USER
-DB_PASSWORD=YOUR-DB-PASSWORD
-DB_HOST=YOUR-DB-HOST
-DB_PORT=YOUR-DB-PORT
+OPENAI_API_KEY=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+AZURE_STORAGE_SAS_URL=
+AZURE_STORAGE_CONTAINER=
 ```
 
 #### **Step 2: Install Dependencies**
