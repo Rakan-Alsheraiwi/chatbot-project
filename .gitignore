@@ -7,7 +7,7 @@
 chroma_db/
 pdf_store/
 chat_logs/
-.env 
+.env  
 
 # User-specific files
 *.rsuser
