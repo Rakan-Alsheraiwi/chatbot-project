@@ -9,7 +9,7 @@ DELETE_CHAT_URL = "http://127.0.0.1:5000/delete_chat/"
 UPLOAD_PDF_URL = "http://127.0.0.1:5000/upload_pdf/"
 CHAT_URL = "http://127.0.0.1:5000/chat/"
 RAG_CHAT_URL = "http://127.0.0.1:5000/rag_chat/"
-
+# test 
 # Initialize session state
 if "history_chats" not in st.session_state:
     st.session_state["history_chats"] = []
