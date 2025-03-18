@@ -34,34 +34,9 @@ AZURE_STORAGE_SAS_URL=
 AZURE_STORAGE_CONTAINER=
 ```
 
-#### **Step 2: Install Dependencies**
-To use **ChromaDB**, install it via `pip`. The necessary packages are listed in `requirements.txt`, so you can install everything by running:
+#### **Step 2: Start Sartup Script**
 
 ```bash
-pip install -r requirements.txt
-```
-
-#### **Step 3: Start ChromaDB**
-To enable retrieval, we need to start ChromaDB. Use the following command to start the Chroma server:
-
-```bash
-chroma run --path /db_path
-```
-
-Replace `/db_path` with the directory where you want to store the data, e.g., `chromadb`.
-
-#### **Step 4: Start the Backend**
-Next, start the FastAPI backend:
-
-```bash
-uvicorn backend:app --reload --port 5000
-```
-
-> **Note:** Compared to the last stage, we have added the `--port 5000` parameter. Since ChromaDB uses port **8000** by default, this prevents a port conflict.
-
-#### **Step 5: Start the Streamlit App**
-Finally, run the Streamlit app:
-
-```bash
-streamlit run chatbot.py
+chmod +x setup.sh
+./setup.sh <PAT_token> <repo_url> <branch_name> <password>
 ```
