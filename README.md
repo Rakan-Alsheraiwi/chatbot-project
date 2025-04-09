@@ -39,4 +39,3 @@ AZURE_STORAGE_CONTAINER=
 ```bash
 chmod +x setup.sh
 ./setup.sh <PAT_token> <repo_url> <branch_name> <password>
-```
