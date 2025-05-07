@@ -75,7 +75,7 @@ jobs:
 
       - name: Set Application Settings
         run: |
-          az functionapp config appsettings set --name backend-service-sda1 --resource-group MyResourceGroup --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=sdakeyvault" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
+          az functionapp config appsettings set --name backend-service-sda1 --resource-group MyResourceGroup --settings "COSMOSDB_CONNECTION_STRING=${{ secrets.COSMOSDB_CONNECTION_STRING }}" "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=sdakeyvault" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
