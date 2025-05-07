@@ -35,13 +35,12 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r requirements.txt --target=".python_packages/lib/site-packages"
-
+        run: pip install -r requirements.txt
 
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./* .python_packages/*
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -49,7 +48,7 @@ jobs:
           name: python-app
           path: |
             release.zip
-         
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -70,15 +69,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0F89C56A3DDB4167BD9DCA8A34D6A491 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2EE35487809942FEB7B07EAB685B7C27 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FBE45BFA56CD4FEC95311D6AEE076265 }}
-
-
-      - name: Set Application Settings
-        run: |
-          az functionapp config appsettings set --name backend-service-sda1 --resource-group MyResourceGroup --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=sdakeyvault" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
-
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_04930057150E4209864C0CF9821CE41E }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_55A125322D984CFF90575A79EAFD9715 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5F443EC5B39E4E09A667D2B93A92B758 }}
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
@@ -87,7 +80,4 @@ jobs:
           app-name: 'backend-service-sda1'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          scm-do-build-during-deployment: true
-          enable-oryx-build: true
-          
           
