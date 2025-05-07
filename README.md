@@ -28,7 +28,7 @@ It creates a new GitHub Actions workflow file in the `.github/workflows` directo
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure Functions: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python project to Azure Function App - backend-service-2025
+name: Build and deploy Python project to Azure Function App - backend-service-sda1
 
 on:
   push:
@@ -63,6 +63,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt --target=".python_packages/lib/site-packages"
 
+
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
@@ -74,7 +75,7 @@ jobs:
           name: python-app
           path: |
             release.zip
-
+         
 
   deploy:
     runs-on: ubuntu-latest
@@ -95,19 +96,21 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F4CEAB06A1554B2FB0AC95869EFBC883 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BF32BF4BCFDB4F99AE0608CEA3D5DD88 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_39722340F2C249749B97A7EEA13E8EC1 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0F89C56A3DDB4167BD9DCA8A34D6A491 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2EE35487809942FEB7B07EAB685B7C27 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_FBE45BFA56CD4FEC95311D6AEE076265 }}
+
 
       - name: Set Application Settings
         run: |
-          az functionapp config appsettings set --name backend-service-2025 --resource-group DemoVmSDA --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=sdakeyvault2025" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
+          az functionapp config appsettings set --name backend-service-sda1 --resource-group MyResourceGroup --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=sdakeyvault" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
+
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
         id: deploy-to-function
         with:
-          app-name: 'backend-service-2025'
+          app-name: 'backend-service-sda1'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           scm-do-build-during-deployment: true
