@@ -35,12 +35,12 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        run: pip install -r requirements.txt
 
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./* .python_packages/*
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -48,7 +48,7 @@ jobs:
           name: python-app
           path: |
             release.zip
-          
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -69,16 +69,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_870778C6C4D94DAA8DC1F77FFF85371E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_69AEE79C480C42D984B92D6142DD4D1B }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_528742F211054C8E8B4C1D87E2C9B060 }}
-
-
-      - name: Set Application Settings
-        run: |
-          az functionapp config appsettings set --name backend-service-sda1 --resource-group MyResourceGroup --settings "FUNCTIONS_WORKER_RUNTIME=python" "KEY_VAULT_NAME=sdakeyvault" "APPINSIGHTS_INSTRUMENTATIONKEY=azurerm_application_insights.ai.instrumentation_key"
-
-          
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E528C5B6187C41DE9B0B27F0080ACB8B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_577A139C360B4C3E9236C0C242D05803 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F27BD2B09CA9470B99398E1B5567DA93 }}
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
@@ -87,6 +80,4 @@ jobs:
           app-name: 'backend-service-sda1'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          scm-do-build-during-deployment: true
-          enable-oryx-build: true
           
